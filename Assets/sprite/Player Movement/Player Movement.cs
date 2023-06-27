@@ -12,6 +12,7 @@ public class MovementAnimation : MonoBehaviour
     private Vector2 movementInput;
     //Acces to our Animator to Play animations
     public Animator anim;
+    public int coinscount;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,44 +24,50 @@ public class MovementAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-      
-        {
-            anim.enabled = true;
-            anim.SetTrigger("Forward");
-        }
+        //if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
 
-
-        
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            anim.enabled = true;
-            anim.SetTrigger("Backward");
-        }
+        //{
+        //    anim.enabled = true;
+        //    anim.SetTrigger("Forward");
+        //}
 
 
 
-
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            anim.enabled = true;
-            anim.SetTrigger("Left");
-        }
+        //if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        //{
+        //    anim.enabled = true;
+        //    anim.SetTrigger("Backward");
+        //}
 
 
 
 
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            anim.enabled = true;
-            anim.SetTrigger("Right");
-        }
+        //if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //    anim.enabled = true;
+        //    anim.SetTrigger("Left");
+        //}
 
 
-        if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) ||Input.GetKeyUp(KeyCode.D))
-        {
-            anim.enabled = false;
-        }
+
+
+        //if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    anim.enabled = true;
+        //    anim.SetTrigger("Right");
+        //}
+
+
+        //if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) ||Input.GetKeyUp(KeyCode.D))
+        //{
+        //    anim.enabled = false;
+        //}
+        anim.SetFloat("Horizontal",movementInput.x);
+        anim.SetFloat("Vertical", movementInput.y);
+        anim.SetFloat("Speed", movementInput.sqrMagnitude);
+
+
+
 
     }
     private void FixedUpdate()
@@ -77,4 +84,15 @@ public class MovementAnimation : MonoBehaviour
     {
     movementInput = inputValue.Get<Vector2>();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("coins"))
+        { 
+        Destroy(collision.gameObject);
+        coinscount++;
+        }
+        
+    }
+
 }
