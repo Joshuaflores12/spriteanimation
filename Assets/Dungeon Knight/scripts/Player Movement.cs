@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class MovementAnimation : MonoBehaviour
 {
     //Speed (how fast the player will navigate on our game)
-    public float moveSpeed;
+    public int moveSpeed;
     // Rigid body (handles physics)
     public Rigidbody2D rigidbody;
     //where the player is moving
@@ -13,6 +13,7 @@ public class MovementAnimation : MonoBehaviour
     //Acces to our Animator to Play animations
     public Animator anim;
     public int coinscount;
+    public int healthpoints;
     // Start is called before the first frame update
     void Start()
     {
@@ -89,10 +90,24 @@ public class MovementAnimation : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("coins"))
         { 
-        Destroy(collision.gameObject);
         coinscount++;
+        Destroy(collision.gameObject);
         }
-        
+
+        if (collision.gameObject.CompareTag("Speed"))
+        {
+            
+            coinscount++;
+            Transform col = collision.transform;
+            col.transform.position = new Vector2(999, 999);
+        }
+
+        if (collision.gameObject.CompareTag("Health"))
+        {
+            Destroy(collision.gameObject);
+            coinscount++;
+        }
+
     }
 
 }
